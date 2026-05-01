@@ -8,7 +8,9 @@
   <meta name="google-site-verification" content="3AilorlcFRg9a6ye7EKVlgBsjnNCoMhnsP4cH7CpivI" />
   <title>VM GRAPHICS</title>
 
-  <meta property="og:title" content="VM Graphics - Professional Design Services Sri Lanka">
+<link rel="canonical" href="https://vmgraphics.giize.com/" />
+
+<meta property="og:title" content="VM Graphics - Professional Design Services Sri Lanka">
 <meta property="og:description" content="Order custom Facebook Posts, Logos, CV Designs. Fast delivery across Sri Lanka. WhatsApp us now!">
 <meta property="og:image" content="https://vmgraphics.giize.com/images/og-image.png">
 <meta property="og:image:width" content="1200">
@@ -427,6 +429,9 @@ body.site-loaded footer {
         </div>
         <button class="slider-btn next" onclick="scrollProjects(1)" aria-label="Next project">›</button>
       </div>
+      <div style="text-align: center; margin-top: 40px;">
+      <a href="project.html" class="btn">View All Projects & Prices</a>
+    </div>
     </div>
   </section>
 
@@ -462,41 +467,51 @@ body.site-loaded footer {
   </div>
 
   <script>
-document.body.classList.add('loading');
+    const loader = document.getElementById('loader');
+    const navEntry = performance.getEntriesByType('navigation')[0];
+    const isPageReload = navEntry && navEntry.type === 'reload';
+    const isFirstVisit =!sessionStorage.getItem('siteLoaded');
 
-window.addEventListener('load', () => {
-  const loader = document.getElementById('loader');
-  const progressFill = document.querySelector('.progress-fill');
-  const percentText = document.getElementById('progress-percent');
+    if (isFirstVisit || isPageReload) {
+      document.body.classList.add('loading');
 
-  progressFill.addEventListener('animationstart', () => {
-    percentText.textContent = 0;
-  });
+      window.addEventListener('load', () => {
+        const progressFill = document.querySelector('.progress-fill');
+        const percentText = document.getElementById('progress-percent');
 
-  let currentPercent = 0;
-  const totalSteps = 5;
-  const duration = 3900;
-  const stepTime = duration / totalSteps; // 1000ms = 1s
+        progressFill.addEventListener('animationstart', () => {
+          percentText.textContent = 0;
+        });
 
-  const updatePercent = () => {
-    currentPercent += 25;
-    if (currentPercent <= 100) {
-      percentText.textContent = currentPercent;
-      if (currentPercent < 100) {
+        let currentPercent = 0;
+        const totalSteps = 5;
+        const duration = 3900;
+        const stepTime = duration / totalSteps;
+
+        const updatePercent = () => {
+          currentPercent += 25;
+          if (currentPercent <= 100) {
+            percentText.textContent = currentPercent;
+            if (currentPercent < 100) {
+              setTimeout(updatePercent, stepTime);
+            }
+          }
+        };
+
         setTimeout(updatePercent, stepTime);
-      }
+
+        progressFill.addEventListener('animationend', () => {
+          percentText.textContent = 100;
+          loader.classList.add('hidden');
+          document.body.classList.remove('loading');
+          document.body.classList.add('site-loaded');
+          sessionStorage.setItem('siteLoaded', 'true');
+        });
+      });
+    } else {
+      loader.style.display = 'none';
+      document.body.classList.add('site-loaded');
     }
-  };
-
-  setTimeout(updatePercent, stepTime);
-
-  progressFill.addEventListener('animationend', () => {
-    percentText.textContent = 100;
-    loader.classList.add('hidden');
-    document.body.classList.remove('loading');
-    document.body.classList.add('site-loaded');
-  });
-});
 
     const toggle = document.getElementById('theme-toggle');
     const body = document.body;
