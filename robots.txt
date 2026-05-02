@@ -7,4 +7,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://vmgraphics.giize.com/sitemap.xml
+Sitemap: https://vm.vmgraphics.giize.com/sitemap.xml
