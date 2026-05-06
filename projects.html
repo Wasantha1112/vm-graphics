@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Projects</title>
+
+    <meta property="og:title" content="VM Graphics - Professional Design Services Sri Lanka">
+    <meta property="og:description" content="Order custom Facebook Posts, Logos, CV Designs. Fast delivery across Sri Lanka. WhatsApp us now!">
+    <meta property="og:image" content="https://vmgraphics.ooguy.com/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://vmgraphics.ooguy.com/">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/x-icon" href="https://vmgraphics.ooguy.com/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://vmgraphics.ooguy.com/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://vmgraphics.ooguy.com/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://vmgraphics.ooguy.com/images/apple-touch-icon.png">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --primary-purple: #9d00ff;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --border-purple: #9d00ff;
+        }
+
+        body { background-color: var(--bg-dark); color: var(--text-white); font-family: 'Segoe UI', sans-serif; margin: 0; }
+
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 50px; background-color: rgba(10, 10, 10, 0.95);
+            border-bottom: 1px solid #222; position: sticky; top: 0; z-index: 1000;
+        }
+        .logo { font-size: 24px; font-weight: bold; text-decoration: none; color: white; }
+        .logo span { color: var(--primary-purple); }
+
+        .container { padding: 60px 5%; max-width: 1200px; margin: auto; }
+        .section-title { text-align: center; font-size: 35px; text-transform: uppercase; margin-bottom: 50px; letter-spacing: 2px; }
+        .section-title span { color: var(--primary-purple); }
+
+        /* Sliders */
+        .specialty-item { margin-bottom: 60px; position: relative; }
+        .category-name { font-size: 26px; font-weight: bold; color: var(--primary-purple); margin-bottom: 20px; text-transform: capitalize; }
+
+        .slider-container { position: relative; display: flex; align-items: center; }
+        .slider-wrapper {
+            display: flex; gap: 20px; overflow-x: scroll; scroll-behavior: smooth;
+            padding: 15px 5px; scrollbar-width: none;
+            min-height: 200px; width: 100%;
+        }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+
+        .item-card {
+            min-width: 260px; max-width: 260px; background: var(--card-bg); border: 1px solid #222;
+            border-radius: 15px; padding: 20px; text-align: center; transition: 0.3s;
+        }
+        .item-card:hover { border-color: var(--primary-purple); transform: translateY(-5px); }
+        .item-img { width: 100%; height: 160px; background: #1a1a1a; border-radius: 10px; margin-bottom: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .item-img img { width: 100%; height: 100%; object-fit: contain; border-radius: 10px; }
+        
+        .item-card h4 { margin: 10px 0; font-size: 18px; }
+        .item-card p { font-size: 14px; color: var(--text-gray); line-height: 1.4; margin-bottom: 10px; }
+        .item-price { color: var(--primary-purple); font-weight: bold; }
+
+        .arrow {
+            background: rgba(157, 0, 255, 0.2); color: white; border: 1px solid var(--primary-purple);
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            position: absolute; z-index: 10; font-size: 18px; transition: 0.3s;
+        }
+        .arrow:hover { background: var(--primary-purple); }
+        .prev { left: -20px; }
+        .next { right: -20px; }
+
+        /* Price List Table */
+        .price-section { border: 2px solid var(--primary-purple); padding: 40px; border-radius: 20px; margin-top: 50px; background: transparent; }
+        .price-section h2 { text-align: center; color: var(--primary-purple); margin-bottom: 30px; }
+        
+        .price-table { width: 100%; border-collapse: collapse; }
+        .price-table th, .price-table td { padding: 15px; border-bottom: 1px solid #222; text-align: left; }
+        .price-table th { color: var(--text-gray); text-transform: uppercase; font-size: 14px; }
+        .price-val { color: var(--primary-purple); font-weight: bold; text-align: right !important; }
+
+        .notice-box { margin-top: 40px; padding: 25px; border: 1px dashed var(--primary-purple); border-radius: 15px; background: rgba(157, 0, 255, 0.05); }
+        .notice-box h3 { color: var(--primary-purple); margin-top: 0; }
+        .notice-box ul { list-style: none; padding: 0; margin: 0; }
+        .notice-box li { color: var(--text-gray); margin-bottom: 10px; padding-left: 20px; position: relative; font-size: 14px; }
+        .notice-box li::before { content: "•"; color: var(--primary-purple); position: absolute; left: 0; font-weight: bold; }
+
+        .wa-container { text-align: center; margin-top: 40px; }
+        .wa-btn {
+            background-color: #25D366; color: white; text-decoration: none;
+            padding: 15px 35px; border-radius: 50px; font-weight: bold;
+            display: inline-flex; align-items: center; gap: 10px; transition: 0.3s;
+        }
+        .wa-btn:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4); }
+
+        .back-home { text-align: center; margin: 50px 0; }
+        .back-btn { text-decoration: none; color: var(--primary-purple); border: 2px solid var(--primary-purple); padding: 12px 30px; border-radius: 50px; font-weight: bold; transition: 0.3s; }
+        .back-btn:hover { background: var(--primary-purple); color: white; }
+
+        footer { text-align: center; padding: 30px; color: var(--text-gray); border-top: 1px solid #111; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo" id="navNameDisplay">VM <span>GRAPHICS</span></a>
+    </nav>
+
+    <section class="container" id="navNameDisplay>
+        <h2 class="section-title">My <span>Projects</span></h2>
+
+        <div id="dynamicSectionsContainer"></div>
+
+        <div class="price-section">
+            <h2>Complete Price List</h2>
+            <table class="price-table">
+                <thead>
+                    <tr><th>Service</th><th style="text-align: right;">Price (LKR)</th></tr>
+                </thead>
+                <tbody id="dynamicPriceList"></tbody>
+            </table>
+
+            <div class="notice-box">
+                <h3>Important Notes:</h3>
+                <ul id="dynamicNotes"></ul>
+            </div>
+
+            <div class="wa-container">
+                <a href="#" id="dynamicWaLink" class="wa-btn" target="_blank">
+                    Chat on WhatsApp
+                </a>
+            </div>
+        </div>
+
+        <div class="back-home">
+            <a href="index.html" class="back-btn">← Back to Home Page</a>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 VM GRAPHICS. All rights reserved.
+    </footer>
+
+    <script>
+        function scrollS(id, dist) {
+            document.getElementById(id).scrollBy({ left: dist, behavior: 'smooth' });
+        }
+
+        function loadProjectContent() {
+            // 1. Navbar update
+            const savedNav = localStorage.getItem('navName');
+            if(savedNav) document.getElementById('navNameDisplay').innerHTML = `${savedNav} <span>GRAPHICS</span>`;
+
+            // 2. Dynamic Sections & Sliders Loading
+            const projectsData = JSON.parse(localStorage.getItem('vmProjectsData')) || {};
+            const sectionContainer = document.getElementById('dynamicSectionsContainer');
+            sectionContainer.innerHTML = ''; 
+
+            Object.keys(projectsData).forEach(categoryKey => {
+                const categoryObj = projectsData[categoryKey];
+                
+                // --- වෙනස සිදුකළේ මෙතැනයි ---
+                // Admin Panel එකෙන් එවන 'categoryDisplayName' හෝ 'name' කියන නම මුලින්ම පරීක්ෂා කරනවා
+                const sectionName = categoryObj.categoryDisplayName || categoryObj.name || categoryKey.replace(/-/g, ' ');
+                
+                const items = Array.isArray(categoryObj) ? categoryObj : (categoryObj.items || []);
+
+                if(items.length > 0) {
+                    const sectionHtml = `
+                        <div class="specialty-item">
+                            <h3 class="category-name">${sectionName}</h3>
+                            <div class="slider-container">
+                                <button class="arrow prev" onclick="scrollS('${categoryKey}-s', -300)">❮</button>
+                                <div class="slider-wrapper" id="${categoryKey}-s">
+                                    ${items.map(item => `
+                                        <div class="item-card">
+                                            <div class="item-img">
+                                                <img src="${item.img || 'https://via.placeholder.com/260x160?text=VM+Graphics'}" alt="${item.title}">
+                                            </div>
+                                            <h4>${item.title}</h4>
+                                            <p>${item.desc}</p>
+                                            <span class="item-price">${item.price}</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <button class="arrow next" onclick="scrollS('${categoryKey}-s', 300)">❯</button>
+                            </div>
+                        </div>
+                    `;
+                    sectionContainer.innerHTML += sectionHtml;
+                }
+            });
+
+            // 3. Price List Table
+            const prices = JSON.parse(localStorage.getItem('vmPriceListData')) || [];
+            document.getElementById('dynamicPriceList').innerHTML = prices.map(p => `
+                <tr><td>${p.service}</td><td class="price-val">${p.price}</td></tr>
+            `).join('');
+
+            // 4. Important Notes
+            const notes = JSON.parse(localStorage.getItem('vmNotesData')) || [];
+            document.getElementById('dynamicNotes').innerHTML = notes.map(n => `<li>${n}</li>`).join('');
+
+            // 5. WhatsApp Settings
+            const savedNum = localStorage.getItem('vmWaBtnLink') || "94741688630"; 
+            const savedText = localStorage.getItem('vmWaBtnText') || "Chat on WhatsApp";
+            const waBtn = document.getElementById('dynamicWaLink');
+            if(waBtn) {
+                waBtn.href = `https://wa.me/${savedNum.replace(/\D/g, '')}`;
+                waBtn.innerText = savedText;
+            }
+        }
+
+        window.onload = loadProjectContent;
+    </script>
+</body>
+</html>

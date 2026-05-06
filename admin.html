@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <meta property="og:title" content="VM Graphics - Professional Design Services Sri Lanka">
+    <meta property="og:description" content="Order custom Facebook Posts, Logos, CV Designs. Fast delivery across Sri Lanka. WhatsApp us now!">
+    <meta property="og:image" content="https://vmgraphics.ooguy.com/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://vmgraphics.ooguy.com/">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/x-icon" href="https://vmgraphics.ooguy.com/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://vmgraphics.ooguy.com/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://vmgraphics.ooguy.com/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://vmgraphics.ooguy.com/images/apple-touch-icon.png">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VM ADMIN</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a; --sidebar-bg: #111; --primary-purple: #9d00ff;
+            --text-white: #ffffff; --text-gray: #b3b3b3; --error-red: #ff4d4d;
+            --success-green: #00ff88; --card-bg: #151515;
+        }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background-color: var(--bg-dark); color: var(--text-white); display: flex; height: 100vh; overflow: hidden; position: relative; }
+        
+        /* Sidebar Basic */
+        .sidebar { 
+            width: 260px; background-color: var(--sidebar-bg); border-right: 1px solid #222; padding: 25px; 
+            display: flex; flex-direction: column; transition: 0.3s; z-index: 1000; 
+        }
+
+        /* Mobile Menu Toggle Button */
+        .menu-toggle {
+            display: none; position: fixed; top: 15px; right: 15px; background: var(--primary-purple);
+            color: white; border: none; width: 40px; height: 40px; border-radius: 8px; z-index: 2000; cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); align-items: center; justify-content: center;
+        }
+
+        .admin-logo { font-size: 22px; font-weight: bold; margin-bottom: 40px; letter-spacing: 1px; }
+        .admin-logo span { color: var(--primary-purple); }
+        .nav-group { margin-bottom: 25px; }
+        .nav-label { font-size: 11px; text-transform: uppercase; color: #444; font-weight: bold; margin-bottom: 10px; display: block; letter-spacing: 1px; }
+        .nav-item { padding: 12px 15px; color: var(--text-gray); text-decoration: none; display: flex; align-items: center; gap: 12px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; transition: 0.2s; font-size: 14px; }
+        .nav-item:hover { background: rgba(255,255,255,0.05); color: white; }
+        .nav-item.active { background-color: var(--primary-purple); color: white; box-shadow: 0 4px 15px rgba(157, 0, 255, 0.3); }
+        
+        .main-content { flex: 1; padding: 40px; overflow-y: auto; background: radial-gradient(circle at top right, #1a0033 0%, var(--bg-dark) 40%); }
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .content-card { background-color: var(--card-bg); border-radius: 12px; padding: 25px; border: 1px solid #222; margin-bottom: 25px; }
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .section-title { font-size: 18px; font-weight: 600; margin: 0; }
+        label { display: block; margin-top: 15px; font-size: 13px; color: var(--text-gray); margin-bottom: 5px; }
+        .admin-input, .admin-textarea { width: 100%; background: #0f0f0f; border: 1px solid #333; padding: 12px; color: white; border-radius: 6px; outline: none; transition: 0.3s; box-sizing: border-box; }
+        .admin-input:focus { border-color: var(--primary-purple); box-shadow: 0 0 10px rgba(157, 0, 255, 0.1); }
+        .btn { padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; border: none; transition: 0.2s; font-size: 13px; }
+        .btn-purple { background: var(--primary-purple); color: white; }
+        .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        
+        .services-pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+
+        #customPopup {
+            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+            background: #1a1a1a; border: 1px solid var(--primary-purple); padding: 20px 40px;
+            border-radius: 12px; z-index: 10001; color: white; font-weight: bold;
+            box-shadow: 0 0 30px rgba(157, 0, 255, 0.4); display: none; opacity: 0;
+            transition: 0.3s ease; text-align: center; pointer-events: none;
+        }
+        #customPopup.show { display: block; opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        #loginOverlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-dark); z-index: 10000; display: flex; justify-content: center; align-items: center; }
+        .login-box { background: #111; padding: 40px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; border: 1px solid #222; }
+        
+        .skill-entry { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+        .skill-color-input { width: 50px; height: 42px; padding: 2px; background: #0f0f0f; border: 1px solid #333; border-radius: 6px; cursor: pointer; }
+
+        /* Project Accordion Style */
+        .project-edit-box .card-header { display: flex; align-items: center; cursor: pointer; padding: 5px 0; }
+        .project-edit-box .card-header i { transition: 0.3s; margin-right: 15px; color: var(--primary-purple); }
+        .project-edit-box.open .card-header i { transform: rotate(180deg); }
+        .project-edit-box .card-body { display: none; margin-top: 15px; border-top: 1px solid #222; padding-top: 15px; }
+        .project-edit-box.open .card-body { display: block; }
+
+        /* Inbox Styling */
+        .inbox-card { background: #000; border: 1px solid #222; padding: 15px; border-radius: 10px; margin-bottom: 15px; position: relative; border-left: 4px solid var(--primary-purple); }
+        .inbox-card h4 { margin: 0 0 5px 0; font-size: 16px; color: var(--primary-purple); }
+        .inbox-card p { margin: 5px 0; font-size: 14px; color: var(--text-gray); }
+        .inbox-card .time { font-size: 11px; color: #444; position: absolute; top: 15px; right: 15px; }
+        .btn-delete-msg { background: none; border: none; color: #444; cursor: pointer; position: absolute; bottom: 15px; right: 15px; transition: 0.2s; }
+        .btn-delete-msg:hover { color: var(--error-red); }
+
+        .confirm-modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); z-index: 11000; justify-content: center; align-items: center;
+        }
+        .confirm-modal {
+            background: #151515; padding: 30px; border-radius: 15px; text-align: center;
+            border: 1px solid var(--primary-purple); box-shadow: 0 0 30px rgba(157, 0, 255, 0.2);
+            max-width: 380px; width: 90%; animation: popupAnim 0.3s ease;
+        }
+        .confirm-modal i { font-size: 40px; color: var(--error-red); margin-bottom: 15px; }
+        .confirm-modal h3 { margin: 0 0 10px 0; font-size: 20px; }
+        .confirm-modal p { color: var(--text-gray); font-size: 14px; margin-bottom: 25px; line-height: 1.5; }
+        .confirm-btns { display: flex; gap: 10px; justify-content: center; }
+        .confirm-btns .btn { flex: 1; padding: 12px; }
+        .btn-gray { background: #222; color: white; }
+
+        .input-group { position: relative; margin-bottom: 15px; }
+        .toggle-pass { position: absolute; right: 12px; top: 38px; cursor: pointer; color: var(--text-gray); transition: 0.2s; }
+        .toggle-pass:hover { color: var(--primary-purple); }
+
+        @keyframes popupAnim { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        @media screen and (max-width: 768px) {
+            .menu-toggle { display: flex; }
+            .sidebar { position: fixed; left: -260px; height: 100vh; width: 260px; box-shadow: 10px 0 30px rgba(0,0,0,0.5); visibility: hidden; }
+            .sidebar.active { left: 0; visibility: visible; }
+            .main-content { padding: 70px 15px 20px 15px; width: 100%; }
+            .grid-layout { grid-template-columns: 1fr; }
+            .section-header button { width: 100%; margin-top: 5px; }
+        }
+
+        .store-cat-btn { background: #222; color: white; margin-right: 5px; margin-bottom: 5px; }
+        .store-cat-btn.active { background: var(--primary-purple); }
+
+        /* Project Cat Admin Styling */
+        .project-cat-admin { background: rgba(157, 0, 255, 0.05); padding: 15px; border-radius: 10px; border: 1px solid #333; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <button class="menu-toggle" onclick="toggleSidebar()"><i class="fa fa-bars"></i></button>
+    <div id="customPopup">Settings Updated Successfully!</div>
+
+    <div id="globalDeleteModal" class="confirm-modal-overlay">
+        <div class="confirm-modal">
+            <i class="fa fa-exclamation-triangle"></i>
+            <h3 id="deleteModalTitle">Are you sure?</h3>
+            <p id="deleteModalMsg">This action cannot be undone.</p>
+            <div class="confirm-btns">
+                <button class="btn btn-gray" onclick="closeDeleteModal()">Cancel</button>
+                <button id="confirmDeleteBtn" class="btn btn-purple" style="background: var(--error-red);">Delete Now</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="deleteConfirmModal" class="confirm-modal-overlay">
+        <div class="confirm-modal">
+            <i class="fa fa-exclamation-triangle"></i>
+            <h3>Are you sure?</h3>
+            <p>Do you really want to delete all messages? This action cannot be undone.</p>
+            <div class="confirm-btns">
+                <button class="btn btn-gray" onclick="closeConfirmModal()">Cancel</button>
+                <button class="btn btn-purple" style="background: var(--error-red);" onclick="confirmClear()">Delete All</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="loginOverlay">
+        <div class="login-box">
+            <h2 style="margin-bottom: 30px; letter-spacing: 2px;">ADMIN <span>LOGIN</span></h2>
+            <div class="input-group">
+                <input type="text" id="userField" class="admin-input" placeholder="Username">
+            </div>
+            <div class="input-group">
+                <input type="password" id="passField" class="admin-input" placeholder="Password">
+                <i class="fa fa-eye-slash toggle-pass" onclick="togglePassword('passField', this)" style="top: 12px;"></i>
+            </div>
+            <button class="btn btn-purple" style="width:100%; margin-top: 10px;" onclick="checkLogin()">ENTER SYSTEM</button>
+        </div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="admin-logo">VM <span>PANEL</span></div>
+        <div class="nav-group">
+            <span class="nav-label">General</span>
+            <div class="nav-item active" onclick="switchTab('home', event)">🏠 Home Page</div>
+            <div class="nav-item" onclick="switchTab('project', event)">📂 Project Page</div>
+            <div class="nav-item" onclick="switchTab('store', event)">🛒 Store Page</div>
+            <div class="nav-item" onclick="switchTab('inbox', event); loadInbox();">📥 Inbox</div>
+        </div>
+        <div class="nav-group" style="margin-top: auto;">
+            <div class="nav-item" onclick="switchTab('settings', event)">⚙️ Settings</div>
+            <div class="nav-item" style="color: var(--error-red);" onclick="handleLogout()">🔒 Logout</div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="homeTab" class="tab-content active">
+            <h2 style="margin-bottom: 30px;">Home Page Editor</h2>
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Navbar & Hero</h3>
+                    <button class="btn btn-purple" onclick="saveHero()">Update Hero</button>
+                </div>
+                <label>Navbar Name</label>
+                <input type="text" id="navName" class="admin-input">
+                <label>Landing Title</label>
+                <input type="text" id="editTitle" class="admin-input">
+                <label>Slogan / Subtitle</label>
+                <textarea id="editSubtitle" class="admin-textarea" rows="2"></textarea>
+            </div>
+
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">My Portfolio Section</h3>
+                    <button class="btn btn-purple" onclick="savePortfolio()">Update Portfolio</button>
+                </div>
+                <label>Portfolio Paragraph</label>
+                <textarea id="portPara" class="admin-textarea" rows="3"></textarea>
+                <div style="margin-top: 15px;">
+                    <label>Core Skills & Colors</label>
+                    <div id="skillsContainer"></div>
+                    <button class="btn" style="background: #333; color: white; margin-top: 10px; width: 100%;" onclick="addSkillRow()">+ Add New Skill</button>
+                </div>
+                <div class="grid-layout" style="margin-top: 20px;">
+                    <div><label>Experience Details</label><input type="text" id="expDetails" class="admin-input"></div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Services & Pricing (Cards)</h3>
+                    <button class="btn btn-purple" onclick="saveServices()">Update Services</button>
+                </div>
+                <div class="services-pricing-grid">
+                    <div style="background: #000; padding: 15px; border-radius: 8px;">
+                        <label>Card 1 Title</label><input type="text" id="s1Title" class="admin-input">
+                        <label>Description</label><textarea id="s1Desc" class="admin-textarea" rows="2"></textarea>
+                        <label>Price</label><input type="text" id="s1Price" class="admin-input">
+                    </div>
+                    <div style="background: #000; padding: 15px; border-radius: 8px;">
+                        <label>Card 2 Title</label><input type="text" id="s2Title" class="admin-input">
+                        <label>Description</label><textarea id="s2Desc" class="admin-textarea" rows="2"></textarea>
+                        <label>Price</label><input type="text" id="s2Price" class="admin-input">
+                    </div>
+                    <div style="background: #000; padding: 15px; border-radius: 8px;">
+                        <label>Card 3 Title</label><input type="text" id="s3Title" class="admin-input">
+                        <label>Description</label><textarea id="s3Desc" class="admin-textarea" rows="2"></textarea>
+                        <label>Price</label><input type="text" id="s3Price" class="admin-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Contact & Social Media</h3>
+                    <button class="btn btn-purple" onclick="saveContacts()">Update Info</button>
+                </div>
+                <div class="grid-layout">
+                    <div><label>Business Email</label><input type="email" id="editEmail" class="admin-input"></div>
+                    <div><label>WhatsApp Number</label><input type="text" id="editPhone" class="admin-input" placeholder="e.g. 94741688630"></div>
+                </div>
+                <div class="grid-layout" style="margin-top: 15px;">
+                    <div><label>Facebook URL</label><input type="text" id="fbUrl" class="admin-input"></div>
+                    <div><label>Instagram URL</label><input type="text" id="igUrl" class="admin-input"></div>
+                </div>
+                <div class="grid-layout" style="margin-top: 15px;">
+                    <div><label>YouTube URL</label><input type="text" id="ytUrl" class="admin-input"></div>
+                    <div><label>Whatsapp URL</label><input type="text" id="waUrl" class="admin-input"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="projectTab" class="tab-content">
+            <h2 style="margin-bottom: 30px;">Project Page Editor</h2>
+            
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Manage Project Sliders</h3>
+                    <button class="btn btn-purple" onclick="createNewProjectCategory()">+ Create New Category</button>
+                </div>
+                <label>Active Categories (Click to edit items inside)</label>
+                <div id="projectCatNav" style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px; margin-bottom: 20px;"></div>
+                
+                <div id="projectItemsEditorBox" style="display:none; border-top: 1px solid #333; padding-top: 20px;">
+                    <div class="project-cat-admin">
+                        <div class="section-header">
+                            <h4 style="margin:0;">Editing Category: <span id="currentEditingProjectCatName" style="color:var(--primary-purple)">None</span></h4>
+                            <div style="display:flex; gap:10px;">
+                                <button class="btn" style="background:var(--error-red); color:white;" onclick="deleteProjectCategory()">Delete Category</button>
+                                <button class="btn btn-purple" onclick="saveProjectSections()">Update Items & Name</button>
+                            </div>
+                        </div>
+                        <label>Category Display Name</label>
+                        <input type="text" id="editProjectCatDisplayName" class="admin-input" style="margin-bottom: 10px;">
+                    </div>
+
+                    <div id="projectManagerContainer"></div>
+                    <button class="btn" style="background: var(--primary-purple); color: white; width: 100%; margin-top:10px;" onclick="addProjectUI()">+ Add New Card to this Slider</button>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Complete Price List Table</h3>
+                    <button class="btn btn-purple" onclick="savePriceTable()">Update Price Table</button>
+                </div>
+                <div id="priceTableContainer"></div>
+                <button class="btn" style="background: #333; color: white; width: 100%; margin-top:10px;" onclick="addPriceRowUI()">+ Add New Price Row</button>
+            </div>
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Important Notes</h3>
+                    <button class="btn btn-purple" onclick="saveNotesList()">Update Notes</button>
+                </div>
+                <div id="notesContainer"></div>
+                <button class="btn" style="background: #333; color: white; width: 100%; margin-top:10px;" onclick="addNoteRowUI()">+ Add New Note Line</button>
+            </div>
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Project Page Specific Settings</h3>
+                    <button class="btn btn-purple" onclick="saveProjectSettings()">Update Settings</button>
+                </div>
+                <div class="grid-layout">
+                    <div><label>WhatsApp Button Text</label><input type="text" id="pwaBtnText" class="admin-input" placeholder="Chat on WhatsApp"></div>
+                    <div><label>WhatsApp Number (for link)</label><input type="text" id="pwaBtnLink" class="admin-input" placeholder="947xxxxxxxx"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="storeTab" class="tab-content">
+            <h2 style="margin-bottom: 30px;">Store Page Editor</h2>
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Manage Store Sections</h3>
+                    <div>
+                        <button class="btn btn-purple" onclick="createNewStoreSection()">+ Create New Section</button>
+                        <button class="btn btn-purple" onclick="saveStoreBranding()">Update All Settings</button>
+                    </div>
+                </div>
+                <label>Current Store Sections (Click to edit items inside)</label>
+                <div id="storeCategoriesNav" style="display: flex; flex-wrap: wrap; gap: 5px; margin-top: 10px;"></div>
+            </div>
+
+            <div class="content-card" id="storeItemEditorBox" style="display:none;">
+                <div class="section-header">
+                    <h3 class="section-title">Items inside: <span id="currentEditingStoreCat" style="color:var(--primary-purple)">None</span></h3>
+                    <div>
+                        <button class="btn" style="background:var(--error-red); color:white;" onclick="deleteStoreSection()">Delete Section</button>
+                        <button class="btn btn-purple" onclick="saveCurrentStoreCategoryItems()">Save Items</button>
+                    </div>
+                </div>
+                <label>Section Display Name</label>
+                <input type="text" id="editStoreCatName" class="admin-input" style="margin-bottom: 20px;">
+                <div id="storeItemsContainer"></div>
+                <button class="btn" style="background: var(--primary-purple); color: white; width: 100%; margin-top:10px;" onclick="addStoreItemUI()">+ Add New Card to this Section</button>
+            </div>
+
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">"Buy Now" Popup Settings</h3>
+                    <button class="btn btn-purple" onclick="saveStorePopup()">Update Popup Settings</button>
+                </div>
+                <label>Popup Custom Message</label>
+                <textarea id="storePopupMsg" class="admin-textarea" rows="3" placeholder="Please send a screenshot of your payment..."></textarea>
+            </div>
+        </div>
+
+        <div id="inboxTab" class="tab-content">
+            <div class="section-header">
+                <h2>📥 Messages Inbox</h2>
+                <button class="btn" style="background: var(--error-red); color:white" onclick="clearAllMessages()"><i class="fa fa-trash"></i> Clear All</button>
+            </div>
+            <div id="inboxList"></div>
+        </div>
+
+        <div id="settingsTab" class="tab-content">
+            <h2 style="margin-bottom: 30px;">System Settings</h2>
+            <div class="content-card">
+                <div class="section-header">
+                    <h3 class="section-title">Update Login Credentials</h3>
+                    <button class="btn btn-purple" onclick="saveNewLogin()">Save Credentials</button>
+                </div>
+                <div class="input-group">
+                    <label>New Admin Username</label>
+                    <input type="text" id="newUsername" class="admin-input" placeholder="Current: Vimu">
+                </div>
+                <div class="input-group">
+                    <label>New Admin Password</label>
+                    <input type="password" id="newPassword" class="admin-input" placeholder="Current: Vimu@123">
+                    <i class="fa fa-eye-slash toggle-pass" onclick="togglePassword('newPassword', this)"></i>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // --- GLOBAL LOGIC ---
+        let deleteAction = null; // Stores the function to run if confirmed
+
+        function toggleSidebar() { document.getElementById('sidebar').classList.toggle('active'); }
+        function showPopup(msg, color = "var(--primary-purple)") {
+            const popup = document.getElementById('customPopup');
+            popup.innerText = msg; popup.style.borderColor = color;
+            popup.classList.add('show');
+            setTimeout(() => { popup.classList.remove('show'); }, 2000);
+        }
+        function togglePassword(inputId, icon) {
+            const field = document.getElementById(inputId);
+            if (field.type === "password") { field.type = "text"; icon.classList.replace("fa-eye-slash", "fa-eye"); }
+            else { field.type = "password"; icon.classList.replace("fa-eye", "fa-eye-slash"); }
+        }
+
+        // CUSTOM DELETE MODAL LOGIC
+        function openDeleteModal(title, message, onConfirm) {
+            document.getElementById('deleteModalTitle').innerText = title;
+            document.getElementById('deleteModalMsg').innerText = message;
+            deleteAction = onConfirm;
+            document.getElementById('globalDeleteModal').style.display = 'flex';
+            document.getElementById('confirmDeleteBtn').onclick = () => {
+                if(deleteAction) deleteAction();
+                closeDeleteModal();
+            };
+        }
+        function closeDeleteModal() {
+            document.getElementById('globalDeleteModal').style.display = 'none';
+            deleteAction = null;
+        }
+
+        function checkLogin() {
+            const user = document.getElementById('userField').value;
+            const pass = document.getElementById('passField').value;
+            const savedUser = localStorage.getItem('vmAdminUser') || "Vimu";
+            const savedPass = localStorage.getItem('vmAdminPass') || "Vimu@123";
+            if (user === savedUser && pass === savedPass) {
+                sessionStorage.setItem('vmLoggedIn', 'true');
+                document.getElementById('loginOverlay').style.display = 'none';
+                showPopup("Welcome Back, Vimu!");
+            } else { showPopup("Access Denied!", "var(--error-red)"); }
+        }
+        function saveNewLogin() {
+            const newUser = document.getElementById('newUsername').value;
+            const newPass = document.getElementById('newPassword').value;
+            if(newUser) localStorage.setItem('vmAdminUser', newUser);
+            if(newPass) localStorage.setItem('vmAdminPass', newPass);
+            showPopup("Credentials Updated!");
+        }
+        function handleLogout() { sessionStorage.removeItem('vmLoggedIn'); location.reload(); }
+
+        function switchTab(tabName, e) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            if(e) e.currentTarget.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            if(window.innerWidth <= 768) toggleSidebar();
+            if(tabName === 'store') renderStoreCatNav();
+            if(tabName === 'project') renderProjectCatNav();
+        }
+
+        // --- HOME PAGE LOGIC ---
+        function saveHero() {
+            localStorage.setItem('navName', document.getElementById('navName').value);
+            localStorage.setItem('siteTitle', document.getElementById('editTitle').value);
+            localStorage.setItem('siteSubtitle', document.getElementById('editSubtitle').value);
+            showPopup("Hero Updated!");
+        }
+        function savePortfolio() {
+            localStorage.setItem('portPara', document.getElementById('portPara').value);
+            localStorage.setItem('expDetails', document.getElementById('expDetails').value);
+            const skillsArray = [];
+            document.querySelectorAll('.skill-entry').forEach(row => {
+                const name = row.querySelector('.skill-name').value;
+                const color = row.querySelector('.skill-color').value;
+                if(name) skillsArray.push({ name, color });
+            });
+            localStorage.setItem('coreSkillsData', JSON.stringify(skillsArray));
+            showPopup("Portfolio Updated!");
+        }
+        function addSkillRow(name = "", color = "#9d00ff") {
+            const container = document.getElementById('skillsContainer');
+            const div = document.createElement('div');
+            div.className = "skill-entry";
+            div.innerHTML = `<input type="text" class="admin-input skill-name" placeholder="Skill Name" value="${name}" style="flex: 2;"><input type="color" class="skill-color-input skill-color" value="${color}"><button class="btn" style="background: #ff4d4d; color: white;" onclick="this.parentElement.remove()"><i class="fa fa-trash"></i></button>`;
+            container.appendChild(div);
+        }
+        function saveServices() {
+            const services = {
+                s1: { t: document.getElementById('s1Title').value, d: document.getElementById('s1Desc').value, p: document.getElementById('s1Price').value },
+                s2: { t: document.getElementById('s2Title').value, d: document.getElementById('s2Desc').value, p: document.getElementById('s2Price').value },
+                s3: { t: document.getElementById('s3Title').value, d: document.getElementById('s3Desc').value, p: document.getElementById('s3Price').value }
+            };
+            localStorage.setItem('siteServices', JSON.stringify(services));
+            showPopup("Services Saved!");
+        }
+        function saveContacts() {
+            localStorage.setItem('siteEmail', document.getElementById('editEmail').value);
+            localStorage.setItem('sitePhone', document.getElementById('editPhone').value);
+            localStorage.setItem('fbUrl', document.getElementById('fbUrl').value);
+            localStorage.setItem('igUrl', document.getElementById('igUrl').value);
+            localStorage.setItem('waUrl', document.getElementById('waUrl').value);
+            localStorage.setItem('ytUrl', document.getElementById('ytUrl').value);
+            showPopup("Contacts Updated!");
+        }
+
+        // --- PROJECT PAGE LOGIC ---
+        let projectsData = JSON.parse(localStorage.getItem('vmProjectsData')) || {
+            "logo": { name: "Logos", items: [] },
+            "banner": { name: "Banners", items: [] },
+            "social": { name: "Social Media", items: [] },
+            "ff": { name: "Free Fire", items: [] },
+            "thumb": { name: "Thumbnails", items: [] }
+        };
+        
+        let currentProjectCatId = "";
+
+        function renderProjectCatNav() {
+            const nav = document.getElementById('projectCatNav');
+            nav.innerHTML = "";
+            for (let id in projectsData) {
+                const btn = document.createElement('button');
+                btn.className = "btn store-cat-btn" + (id === currentProjectCatId ? " active" : "");
+                btn.innerText = projectsData[id].name || id;
+                btn.onclick = () => editProjectCategory(id);
+                nav.appendChild(btn);
+            }
+        }
+
+        function createNewProjectCategory() {
+            const id = "proj" + Date.now();
+            projectsData[id] = { name: "New Category", items: [] };
+            saveProjectToLocal();
+            renderProjectCatNav();
+            editProjectCategory(id);
+        }
+
+        function editProjectCategory(id) {
+            currentProjectCatId = id;
+            renderProjectCatNav();
+            document.getElementById('projectItemsEditorBox').style.display = "block";
+            const catName = projectsData[id].name || id;
+            document.getElementById('currentEditingProjectCatName').innerText = catName;
+            document.getElementById('editProjectCatDisplayName').value = catName;
+            const container = document.getElementById('projectManagerContainer');
+            container.innerHTML = "";
+            const catItems = projectsData[id].items || [];
+            catItems.forEach(item => {
+                addProjectUI(item.title, item.desc, item.price, item.img);
+            });
+        }
+
+        function addProjectUI(title="", desc="", price="", img="") {
+            const container = document.getElementById('projectManagerContainer');
+            const div = document.createElement('div');
+            div.className = "project-edit-box";
+            div.innerHTML = `<div class="card-header" onclick="this.parentElement.classList.toggle('open')"><i class="fa fa-chevron-down"></i><span class="header-title">${title || 'New Project Card'}</span></div>
+                <div class="card-body"><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div><label>Name</label><input type="text" class="admin-input p-title" onkeyup="this.closest('.project-edit-box').querySelector('.header-title').innerText = this.value" value="${title}"></div><div><label>Price</label><input type="text" class="admin-input p-price" value="${price}"></div></div><label>Image URL</label><input type="text" class="admin-input p-img" value="${img}"><label>Description</label><textarea class="admin-input p-desc" style="height:60px">${desc}</textarea><button class="btn" style="background:red; color:white; width:100%; margin-top:10px" onclick="this.closest('.project-edit-box').remove()">Delete</button></div>`;
+            container.appendChild(div);
+        }
+
+        function saveProjectSections() {
+            if(!currentProjectCatId) return;
+            const newDisplayName = document.getElementById('editProjectCatDisplayName').value;
+            const itemsArray = [];
+            document.querySelectorAll('#projectManagerContainer .project-edit-box').forEach(card => { 
+                itemsArray.push({ 
+                    title: card.querySelector('.p-title').value, 
+                    price: card.querySelector('.p-price').value, 
+                    img: card.querySelector('.p-img').value, 
+                    desc: card.querySelector('.p-desc').value 
+                }); 
+            });
+            projectsData[currentProjectCatId] = { name: newDisplayName, items: itemsArray };
+            saveProjectToLocal();
+            renderProjectCatNav();
+            document.getElementById('currentEditingProjectCatName').innerText = newDisplayName;
+            showPopup("Projects Category & Name Updated!");
+        }
+
+        function deleteProjectCategory() {
+            if(!currentProjectCatId) return;
+            openDeleteModal("Delete Category?", "Do you really want to delete this entire project category?", () => {
+                delete projectsData[currentProjectCatId];
+                saveProjectToLocal();
+                currentProjectCatId = "";
+                document.getElementById('projectItemsEditorBox').style.display = "none";
+                renderProjectCatNav();
+                showPopup("Category Deleted", "var(--error-red)");
+            });
+        }
+
+        function saveProjectToLocal() {
+            localStorage.setItem('vmProjectsData', JSON.stringify(projectsData));
+        }
+
+        function addPriceRowUI(service="", price="") {
+            const container = document.getElementById('priceTableContainer');
+            const div = document.createElement('div');
+            div.className = "skill-entry price-row";
+            div.innerHTML = `<input type="text" class="admin-input pr-service" placeholder="Service" value="${service}" style="flex:3"><input type="text" class="admin-input pr-val" placeholder="Price" value="${price}" style="flex:1.5"><button class="btn" style="background:red; color:white;" onclick="this.parentElement.remove()">X</button>`;
+            container.appendChild(div);
+        }
+        function savePriceTable() {
+            const data = [];
+            document.querySelectorAll('.price-row').forEach(r => { const s = r.querySelector('.pr-service').value; const p = r.querySelector('.pr-val').value; if(s) data.push({ service: s, price: p }); });
+            localStorage.setItem('vmPriceListData', JSON.stringify(data));
+            showPopup("Price Table Saved!");
+        }
+        function addNoteRowUI(text="") {
+            const container = document.getElementById('notesContainer');
+            const div = document.createElement('div');
+            div.className = "skill-entry note-row";
+            div.innerHTML = `<input type="text" class="admin-input note-text" placeholder="Note..." value="${text}" style="flex:1"><button class="btn" style="background:red; color:white;" onclick="this.parentElement.remove()">X</button>`;
+            container.appendChild(div);
+        }
+        function saveNotesList() {
+            const notes = [];
+            document.querySelectorAll('.note-text').forEach(n => { if(n.value) notes.push(n.value); });
+            localStorage.setItem('vmNotesData', JSON.stringify(notes));
+            showPopup("Notes Updated!");
+        }
+        function saveProjectSettings() {
+            localStorage.setItem('vmWaBtnText', document.getElementById('pwaBtnText').value);
+            localStorage.setItem('vmWaBtnLink', document.getElementById('pwaBtnLink').value);
+            showPopup("Settings Updated!");
+        }
+
+        // --- STORE DYNAMIC CATEGORIES LOGIC ---
+        let storeData = JSON.parse(localStorage.getItem('vmStoreCategories')) || { "cat1": { name: "PSD Templates", items: [] } };
+        let currentStoreCatId = "";
+        function renderStoreCatNav() {
+            const nav = document.getElementById('storeCategoriesNav');
+            nav.innerHTML = "";
+            for (let id in storeData) {
+                const btn = document.createElement('button');
+                btn.className = "btn store-cat-btn" + (id === currentStoreCatId ? " active" : "");
+                btn.innerText = storeData[id].name; btn.onclick = () => editStoreCategory(id);
+                nav.appendChild(btn);
+            }
+        }
+        function createNewStoreSection() {
+            const id = "cat" + Date.now(); storeData[id] = { name: "New Section", items: [] };
+            saveStoreToLocal(); renderStoreCatNav(); editStoreCategory(id);
+        }
+        function editStoreCategory(id) {
+            currentStoreCatId = id; renderStoreCatNav();
+            document.getElementById('storeItemEditorBox').style.display = "block";
+            document.getElementById('currentEditingStoreCat').innerText = storeData[id].name;
+            document.getElementById('editStoreCatName').value = storeData[id].name;
+            const container = document.getElementById('storeItemsContainer'); container.innerHTML = "";
+            storeData[id].items.forEach(item => addStoreItemUI(item.title, item.desc, item.price, item.img, item.btnText, item.type));
+        }
+        function addStoreItemUI(title="", desc="", price="", img="", btnText="BUY NOW", type="image") {
+            const container = document.getElementById('storeItemsContainer');
+            const div = document.createElement('div');
+            div.className = "project-edit-box";
+            div.innerHTML = `<div class="card-header" onclick="this.parentElement.classList.toggle('open')"><i class="fa fa-chevron-down"></i><span class="header-title">${title || 'New Item'}</span></div>
+                <div class="card-body"><div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"><div><label>Title</label><input type="text" class="admin-input s-title" onkeyup="this.closest('.project-edit-box').querySelector('.header-title').innerText = this.value" value="${title}"></div><div><label>Price</label><input type="text" class="admin-input s-price" value="${price}"></div></div><div style="display:grid; grid-template-columns: 1fr 2fr; gap:10px; margin-top:10px;"><div><label>Media Type</label><select class="admin-input s-type"><option value="image" ${type === 'image' ? 'selected' : ''}>🖼️ Image</option><option value="video" ${type === 'video' ? 'selected' : ''}>🎥 Video</option></select></div><div><label>Media URL</label><input type="text" class="admin-input s-img" value="${img}"></div></div><label>Description</label><textarea class="admin-input s-desc" style="height:60px">${desc}</textarea><label>Button Text</label><input type="text" class="admin-input s-btntext" value="${btnText}"><button class="btn" style="background:red; color:white; width:100%; margin-top:10px" onclick="this.closest('.project-edit-box').remove()">Delete Card</button></div>`;
+            container.appendChild(div);
+        }
+        function saveCurrentStoreCategoryItems() {
+            if(!currentStoreCatId) return;
+            storeData[currentStoreCatId].name = document.getElementById('editStoreCatName').value;
+            const items = [];
+            document.querySelectorAll('#storeItemsContainer .project-edit-box').forEach(card => {
+                items.push({ title: card.querySelector('.s-title').value, price: card.querySelector('.s-price').value, img: card.querySelector('.s-img').value, desc: card.querySelector('.s-desc').value, btnText: card.querySelector('.s-btntext').value, type: card.querySelector('.s-type').value });
+            });
+            storeData[currentStoreCatId].items = items;
+            saveStoreToLocal(); renderStoreCatNav(); showPopup("Section Items Saved!");
+        }
+        function deleteStoreSection() {
+            if(!currentStoreCatId) return;
+            openDeleteModal("Delete Section?", "Do you really want to delete this entire section?", () => {
+                delete storeData[currentStoreCatId]; saveStoreToLocal(); currentStoreCatId = "";
+                document.getElementById('storeItemEditorBox').style.display = "none"; renderStoreCatNav(); showPopup("Section Deleted", "var(--error-red)");
+            });
+        }
+        function saveStoreToLocal() { localStorage.setItem('vmStoreCategories', JSON.stringify(storeData)); }
+        function saveStoreBranding() { showPopup("All Branding Saved!"); }
+        function saveStorePopup() { localStorage.setItem('vmStorePopupMsg', document.getElementById('storePopupMsg').value); showPopup("Popup Saved!"); }
+
+        // --- INBOX LOGIC ---
+        function loadInbox() {
+            const container = document.getElementById('inboxList');
+            const messages = JSON.parse(localStorage.getItem('vmMessages')) || [];
+            if(messages.length === 0) { container.innerHTML = `<div class="content-card" style="text-align:center; color:#444;">No messages.</div>`; return; }
+            container.innerHTML = messages.reverse().map((msg, index) => `
+                <div class="inbox-card"><span class="time">${msg.date || ''}</span><h4>${msg.name}</h4><p><strong>Email:</strong> ${msg.email}</p><p style="color:white; margin-top:10px;">${msg.message}</p><button class="btn-delete-msg" onclick="deleteMessage(${messages.length - 1 - index})"><i class="fa fa-trash"></i> Delete</button></div>
+            `).join('');
+        }
+        function deleteMessage(index) {
+            let messages = JSON.parse(localStorage.getItem('vmMessages')) || [];
+            messages.splice(index, 1); localStorage.setItem('vmMessages', JSON.stringify(messages)); loadInbox();
+        }
+        function clearAllMessages() { document.getElementById('deleteConfirmModal').style.display = 'flex'; }
+        function closeConfirmModal() { document.getElementById('deleteConfirmModal').style.display = 'none'; }
+        function confirmClear() { localStorage.setItem('vmMessages', JSON.stringify([])); loadInbox(); closeConfirmModal(); }
+
+        // --- INIT ---
+        window.onload = () => {
+            if(sessionStorage.getItem('vmLoggedIn') === 'true') { document.getElementById('loginOverlay').style.display = 'none'; }
+            
+            document.getElementById('navName').value = localStorage.getItem('navName') || "VM";
+            document.getElementById('editTitle').value = localStorage.getItem('siteTitle') || "VM GRAPHICS";
+            document.getElementById('editSubtitle').value = localStorage.getItem('siteSubtitle') || "";
+            document.getElementById('portPara').value = localStorage.getItem('portPara') || "";
+            document.getElementById('expDetails').value = localStorage.getItem('expDetails') || "";
+            document.getElementById('editEmail').value = localStorage.getItem('siteEmail') || "";
+            document.getElementById('editPhone').value = localStorage.getItem('sitePhone') || "";
+            document.getElementById('fbUrl').value = localStorage.getItem('fbUrl') || "";
+            document.getElementById('igUrl').value = localStorage.getItem('igUrl') || "";
+            document.getElementById('waUrl').value = localStorage.getItem('waUrl') || "";
+            document.getElementById('ytUrl').value = localStorage.getItem('ytUrl') || "";
+            
+            const savedSkills = JSON.parse(localStorage.getItem('coreSkillsData')) || [];
+            if(savedSkills.length > 0) savedSkills.forEach(s => addSkillRow(s.name, s.color)); else addSkillRow("Adobe Photoshop");
+
+            const siteServicesRaw = localStorage.getItem('siteServices');
+            if(siteServicesRaw) {
+                const s = JSON.parse(siteServicesRaw);
+                document.getElementById('s1Title').value = s.s1?.t || ""; document.getElementById('s1Desc').value = s.s1?.d || ""; document.getElementById('s1Price').value = s.s1?.p || "";
+                document.getElementById('s2Title').value = s.s2?.t || ""; document.getElementById('s2Desc').value = s.s2?.d || ""; document.getElementById('s2Price').value = s.s2?.p || "";
+                document.getElementById('s3Title').value = s.s3?.t || ""; document.getElementById('s3Desc').value = s.s3?.d || ""; document.getElementById('s3Price').value = s.s3?.p || "";
+            }
+
+            document.getElementById('pwaBtnText').value = localStorage.getItem('vmWaBtnText') || "Chat on WhatsApp";
+            document.getElementById('pwaBtnLink').value = localStorage.getItem('vmWaBtnLink') || "";
+            
+            renderProjectCatNav();
+            const savedPrices = JSON.parse(localStorage.getItem('vmPriceListData')) || [];
+            if(savedPrices.length > 0) savedPrices.forEach(p => addPriceRowUI(p.service, p.price));
+            const savedNotes = JSON.parse(localStorage.getItem('vmNotesData')) || [];
+            if(savedNotes.length > 0) savedNotes.forEach(n => addNoteRowUI(n));
+            document.getElementById('storePopupMsg').value = localStorage.getItem('vmStorePopupMsg') || "";
+            renderStoreCatNav();
+        };
+    </script>
+</body>
+</html>

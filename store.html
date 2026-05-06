@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VM STORE</title>
+    
+    <meta property="og:title" content="VM Graphics - Professional Design Services Sri Lanka">
+    <meta property="og:description" content="Order custom Facebook Posts, Logos, CV Designs. Fast delivery across Sri Lanka. WhatsApp us now!">
+    <meta property="og:image" content="https://vmgraphics.ooguy.com/images/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://vmgraphics.ooguy.com/">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/x-icon" href="https://vmgraphics.ooguy.com/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://vmgraphics.ooguy.com/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://vmgraphics.ooguy.com/images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://vmgraphics.ooguy.com/images/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0a;
+            --primary-purple: #9d00ff;
+            --text-white: #ffffff;
+            --text-gray: #b3b3b3;
+            --card-bg: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: var(--bg-dark); color: var(--text-white); scroll-behavior: smooth; overflow-x: hidden; }
+
+        .store-header {
+            padding: 80px 20px 40px;
+            text-align: center;
+            background: radial-gradient(circle at top, #1a0033 0%, var(--bg-dark) 60%);
+        }
+        .store-header h1 { font-size: clamp(30px, 8vw, 50px); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 3px; }
+        .store-header h1 span { color: var(--primary-purple); }
+        .store-header p { color: var(--text-gray); font-size: clamp(14px, 4vw, 18px); }
+
+        .container { padding: 40px 15px; max-width: 1200px; margin: auto; }
+        .section-title { font-size: clamp(22px, 5vw, 28px); margin-bottom: 30px; border-left: 5px solid var(--primary-purple); padding-left: 15px; margin-top: 40px; }
+
+        /* PSD Box Settings */
+        .psd-box {
+            background: transparent;
+            border: 2px solid var(--primary-purple);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* මැදට පෙළගැස්වීමට */
+            gap: 30px;
+            box-shadow: 0 0 20px rgba(157, 0, 255, 0.1);
+            margin-bottom: 50px;
+            width: 100%; /* සම්පූර්ණ පළල */
+        }
+
+        .item-card {
+            background: var(--card-bg);
+            border: 1px solid #222;
+            border-radius: 15px;
+            padding: 15px;
+            transition: 0.3s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            width: 100%;
+            max-width: 320px; /* Desktop එකේදී උපරිම පළල */
+        }
+
+        .item-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-purple);
+            background: rgba(157, 0, 255, 0.05);
+        }
+
+        .item-img {
+            width: 100%;
+            height: 200px;
+            background: #1a1a1a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+        }
+
+        .item-img img, .item-img video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: contain; 
+        }
+
+        .item-info { padding: 15px 5px; flex-grow: 1; }
+        .item-info h3 { font-size: 18px; margin-bottom: 10px; color: white; }
+        .item-info p { color: var(--text-gray); font-size: 14px; margin-bottom: 15px; line-height: 1.4; }
+        .item-price { font-size: 20px; font-weight: bold; color: var(--primary-purple); margin-bottom: 20px; display: block; }
+
+        .btn-buy {
+            background: var(--primary-purple);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 14px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        /* Mobile Adjustments */
+        @media (max-width: 768px) {
+            .psd-box {
+                padding: 15px;
+                gap: 20px;
+            }
+            .item-card {
+                max-width: 100%; /* Mobile එකේදී screen එකේ පළලට අනුව හැදේ */
+            }
+            .item-img {
+                height: 180px;
+            }
+        }
+
+        /* Popup Styles */
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9); display: none; justify-content: center;
+            align-items: center; z-index: 10000; backdrop-filter: blur(8px);
+            padding: 20px;
+        }
+        .popup-content {
+            background: #111; border: 2px solid var(--primary-purple);
+            padding: 40px 20px; border-radius: 20px; width: 100%; max-width: 400px;
+            text-align: center; position: relative;
+        }
+        .btn-upload {
+            background: #25D366; color: white; text-decoration: none; padding: 12px 30px;
+            border-radius: 50px; font-weight: bold; display: inline-flex; align-items: center;
+            gap: 10px; width: 100%; justify-content: center;
+        }
+        .close-popup { position: absolute; top: 15px; right: 15px; color: var(--text-gray); cursor: pointer; font-size: 24px; }
+
+        .back-home-container { text-align: center; margin-top: 30px; }
+        .btn-back {
+            color: var(--primary-purple); text-decoration: none; font-weight: bold;
+            border: 2px solid var(--primary-purple); padding: 10px 25px; border-radius: 50px;
+        }
+
+        /* Video Hint */
+        .video-hint {
+            position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.6);
+            padding: 5px 10px; border-radius: 5px; font-size: 10px; color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="store-header">
+        <h1 id="storeTitle">VM <span>STORE</span></h1>
+        <p>Premium Graphic Design Assets</p>
+    </header>
+
+    <section class="container" id="mainStoreContainer">
+        <div class="back-home-container">
+            <a href="index.html" class="btn-back">← BACK TO HOME</a>
+        </div>
+    </section>
+
+    <div class="popup-overlay" id="buyPopup">
+        <div class="popup-content">
+            <span class="close-popup" onclick="closeBuyPopup()">&times;</span>
+            <h3 style="color: var(--primary-purple); margin-bottom: 15px;">Order Information</h3>
+            <p class="popup-msg" id="popupMessage">Please follow the instructions to complete your purchase.</p>
+            <br>
+            <a id="waChatLink" href="#" class="btn-upload" target="_blank">
+                <i class="fab fa-whatsapp"></i> UPLOAD SLIP
+            </a>
+        </div>
+    </div>
+
+    <footer style="text-align: center; padding: 30px; color: var(--text-gray); border-top: 1px solid #111; font-size: 13px;">
+        &copy; 2026 VM GRAPHICS. ALL RIGHTS RESERVED.
+    </footer>
+
+    <script>
+        function openBuyPopup(event) {
+            if(event) event.stopPropagation();
+            document.getElementById('buyPopup').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeBuyPopup() {
+            document.getElementById('buyPopup').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function toggleVideo(card) {
+            const video = card.querySelector('video');
+            if (!video) return;
+            if (video.paused) {
+                video.muted = false;
+                video.play();
+                card.querySelector('.video-hint').innerHTML = '<i class="fas fa-pause"></i> PAUSE';
+            } else {
+                video.pause();
+                card.querySelector('.video-hint').innerHTML = '<i class="fas fa-play"></i> PLAY';
+            }
+        }
+
+        function loadStoreData() {
+            const waNumber = localStorage.getItem('vmWaBtnLink') || "94741688630";
+            document.getElementById('waChatLink').href = `https://wa.me/${waNumber}`;
+
+            const savedMsg = localStorage.getItem('vmStorePopupMsg');
+            if(savedMsg) document.getElementById('popupMessage').innerText = savedMsg;
+
+            const storeData = JSON.parse(localStorage.getItem('vmStoreCategories')) || {};
+            const mainContainer = document.getElementById('mainStoreContainer');
+            const backBtnContainer = document.querySelector('.back-home-container');
+            
+            document.querySelectorAll('.dynamic-section').forEach(s => s.remove());
+
+            for (let id in storeData) {
+                const category = storeData[id];
+                if (category.items && category.items.length > 0) {
+                    const h2 = document.createElement('h2');
+                    h2.className = "section-title dynamic-section";
+                    h2.innerText = category.name;
+                    
+                    const itemBox = document.createElement('div');
+                    itemBox.className = "psd-box dynamic-section";
+                    
+                    itemBox.innerHTML = category.items.map(item => {
+                        let isVideo = item.type === 'video';
+                        let mediaHtml = isVideo 
+                            ? `<div class="video-hint"><i class="fas fa-play"></i> CLICK TO PLAY</div>
+                               <video src="${item.img}" loop playsinline muted></video>` 
+                            : `<img src="${item.img || 'https://via.placeholder.com/300x200'}" alt="Item">`;
+
+                        return `
+                            <div class="item-card" onclick="${isVideo ? 'toggleVideo(this)' : ''}">
+                                <div class="item-img">
+                                    ${mediaHtml}
+                                </div>
+                                <div class="item-info">
+                                    <h3>${item.title}</h3>
+                                    <p>${item.desc}</p>
+                                    <span class="item-price">${item.price}</span>
+                                    <button class="btn-buy" onclick="openBuyPopup(event)">${item.btnText || 'BUY NOW'}</button>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    mainContainer.insertBefore(h2, backBtnContainer);
+                    mainContainer.insertBefore(itemBox, backBtnContainer);
+                }
+            }
+        }
+        window.onload = loadStoreData;
+    </script>
+</body>
+</html>
