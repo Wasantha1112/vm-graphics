@@ -388,6 +388,24 @@
                     <i class="fa fa-eye-slash toggle-pass" onclick="togglePassword('newPassword', this)"></i>
                 </div>
             </div>
+
+            <div class="content-card" style="border: 1px dashed var(--primary-purple);">
+                <div class="section-header">
+                    <h3 class="section-title">Data Backup & Recovery</h3>
+                </div>
+                <p style="font-size: 13px; color: var(--text-gray); margin-bottom: 20px;">Download all your website content as a backup file or restore from a previous one.</p>
+                
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="btn btn-purple" onclick="exportBackup()">
+                        <i class="fa fa-download"></i> Export Backup (JSON)
+                    </button>
+
+                    <input type="file" id="importFile" style="display: none;" onchange="importBackup(event)">
+                    <button class="btn" style="background: #222; color: white; border: 1px solid var(--primary-purple);" onclick="document.getElementById('importFile').click()">
+                        <i class="fa fa-upload"></i> Import Backup
+                    </button>
+                </div>
+            </div>
         </div>
         
     </div>
@@ -453,6 +471,81 @@
             if(window.innerWidth <= 768) toggleSidebar();
             if(tabName === 'store') renderStoreCatNav();
             if(tabName === 'project') renderProjectCatNav();
+        }
+
+        // --- BACKUP & RESTORE LOGIC ---
+        function exportBackup() {
+            const data = {
+                navName: localStorage.getItem('navName'),
+                siteTitle: localStorage.getItem('siteTitle'),
+                siteSubtitle: localStorage.getItem('siteSubtitle'),
+                portPara: localStorage.getItem('portPara'),
+                expDetails: localStorage.getItem('expDetails'),
+                coreSkills: localStorage.getItem('coreSkillsData'),
+                siteServices: localStorage.getItem('siteServices'),
+                siteEmail: localStorage.getItem('siteEmail'),
+                sitePhone: localStorage.getItem('sitePhone'),
+                fbUrl: localStorage.getItem('fbUrl'),
+                igUrl: localStorage.getItem('igUrl'),
+                waUrl: localStorage.getItem('waUrl'),
+                ytUrl: localStorage.getItem('ytUrl'),
+                projects: localStorage.getItem('vmProjectsData'),
+                prices: localStorage.getItem('vmPriceListData'),
+                notes: localStorage.getItem('vmNotesData'),
+                waBtnText: localStorage.getItem('vmWaBtnText'),
+                waBtnLink: localStorage.getItem('vmWaBtnLink'),
+                storeData: localStorage.getItem('vmStoreCategories'),
+                storePopup: localStorage.getItem('vmStorePopupMsg'),
+                adminUser: localStorage.getItem('vmAdminUser'),
+                adminPass: localStorage.getItem('vmAdminPass')
+            };
+            const blob = new Blob([JSON.stringify(data, null, 4)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const date = new Date().toISOString().split('T')[0];
+            a.href = url;
+            a.download = `VM_Graphics_Full_Backup_${date}.json`;
+            a.click();
+            showPopup("Backup File Created!");
+        }
+
+        function importBackup(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const d = JSON.parse(e.target.result);
+                    if(d.navName) localStorage.setItem('navName', d.navName);
+                    if(d.siteTitle) localStorage.setItem('siteTitle', d.siteTitle);
+                    if(d.siteSubtitle) localStorage.setItem('siteSubtitle', d.siteSubtitle);
+                    if(d.portPara) localStorage.setItem('portPara', d.portPara);
+                    if(d.expDetails) localStorage.setItem('expDetails', d.expDetails);
+                    if(d.coreSkills) localStorage.setItem('coreSkillsData', d.coreSkills);
+                    if(d.siteServices) localStorage.setItem('siteServices', d.siteServices);
+                    if(d.siteEmail) localStorage.setItem('siteEmail', d.siteEmail);
+                    if(d.sitePhone) localStorage.setItem('sitePhone', d.sitePhone);
+                    if(d.fbUrl) localStorage.setItem('fbUrl', d.fbUrl);
+                    if(d.igUrl) localStorage.setItem('igUrl', d.igUrl);
+                    if(d.waUrl) localStorage.setItem('waUrl', d.waUrl);
+                    if(d.ytUrl) localStorage.setItem('ytUrl', d.ytUrl);
+                    if(d.projects) localStorage.setItem('vmProjectsData', d.projects);
+                    if(d.prices) localStorage.setItem('vmPriceListData', d.prices);
+                    if(d.notes) localStorage.setItem('vmNotesData', d.notes);
+                    if(d.waBtnText) localStorage.setItem('vmWaBtnText', d.waBtnText);
+                    if(d.waBtnLink) localStorage.setItem('vmWaBtnLink', d.waBtnLink);
+                    if(d.storeData) localStorage.setItem('vmStoreCategories', d.storeData);
+                    if(d.storePopup) localStorage.setItem('vmStorePopupMsg', d.storePopup);
+                    if(d.adminUser) localStorage.setItem('vmAdminUser', d.adminUser);
+                    if(d.adminPass) localStorage.setItem('vmAdminPass', d.adminPass);
+
+                    alert("✅ Success! All data restored. The page will now reload.");
+                    location.reload();
+                } catch (err) {
+                    alert("❌ Error: Invalid backup file.");
+                }
+            };
+            reader.readAsText(file);
         }
 
         // --- HOME PAGE LOGIC ---
