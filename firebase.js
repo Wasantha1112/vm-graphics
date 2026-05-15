@@ -3,12 +3,13 @@
 // ============================================================
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBrWsDrxPODObRDeB4ZB-n0PRXsMxzmIyc",
-    authDomain: "vm-temp0.firebaseapp.com",
-    projectId: "vm-temp0",
-    storageBucket: "vm-temp0.firebasestorage.app",
-    messagingSenderId: "480330086208",
-    appId: "1:480330086268:web:e97d5591e889c2310ed6f9"
+  apiKey: "AIzaSyBOZMBDD2oBoTEKxjLVU4gz6wamm6g67vw",
+  authDomain: "vm-graphics-25ecc.firebaseapp.com",
+  projectId: "vm-graphics-25ecc",
+  storageBucket: "vm-graphics-25ecc.firebasestorage.app",
+  messagingSenderId: "846618065636",
+  appId: "1:846618065636:web:cde4e4429579a149b50af1",
+  measurementId: "G-X1HT3ZJC3F"
 };
 
 firebase.initializeApp(firebaseConfig);
