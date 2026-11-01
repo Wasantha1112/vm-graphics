@@ -1172,7 +1172,7 @@
                 if (snap.empty) { container.innerHTML = `<div class="content-card" style="text-align:center; color:#444;">No messages.</div>`; return; }
                 container.innerHTML = snap.docs.map(doc => {
                     const msg = doc.data();
-                    return `<div class="inbox-card"><span class="time">${msg.date || ''}</span><h4>${msg.name}</h4><p><strong>Email:</strong> ${msg.email}</p><p style="color:white; margin-top:10px;">${msg.message}</p><button class="btn-delete-msg" onclick="deleteMessage('${doc.id}')"><i class="fa fa-trash"></i> Delete</button></div>`;
+                    return `<div class="inbox-card"><span class="time">${msg.date || ''}</span><h4>${msg.name}</h4><p><strong>Whatsapp Number:</strong> ${msg.email}</p><p style="color:white; margin-top:10px;">${msg.message}</p><button class="btn-delete-msg" onclick="deleteMessage('${doc.id}')"><i class="fa fa-trash"></i> Delete</button></div>`;
                 }).join('');
             }).catch(e => { container.innerHTML = `<div style="color:var(--error-red)">Error loading messages: ${e.message}</div>`; });
         }
